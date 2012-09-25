@@ -1,5 +1,3 @@
-/*jshint browser:true laxcomma:true */
-
 /*
  * Tiny Carousel 1.9
  * http://www.baijs.nl/tinycarousel
@@ -9,9 +7,8 @@
  * http://www.opensource.org/licenses/mit-license.php
  * http://www.opensource.org/licenses/gpl-2.0.php
  *
- * Date: 01 / 06 / 2011
- * Depends on library: jQuery
- *
+ * Modified: 25/09/2012 by @lotsofcode
+ * Dependencies: jQuery 1.7
  */
 (function ($) 
 {
@@ -97,10 +94,18 @@
 
         function setEvents()
         {
-            if(options.controls && oBtnPrev.length > 0 && oBtnNext.length > 0)
+            oBtnPrev.off('click.tcl');
+            oBtnNext.off('click.tcl');
+            if (options.controls && oBtnPrev.length > 0 && oBtnNext.length > 0)
             {
-                oBtnPrev.click(function(){oSelf.move(-1); return false;});
-                oBtnNext.click(function(){oSelf.move( 1); return false;});
+                oBtnPrev.on('click.tcl', function(e) { 
+                    oSelf.move(-1);
+                    e.preventDefault();
+                });
+                oBtnNext.on('click.tcl', function(e){
+                    oSelf.move(1);
+                    e.preventDefault();
+                });
             }
 
             if(options.interval)
@@ -118,9 +123,11 @@
         this.start = function () { bPause = false; setTimer(); };
         this.move  = function (iDirection, bPublic)
         {
-            iCurrent = bPublic ? iDirection : iCurrent += iDirection;
-            if(iCurrent > -1 && iCurrent < iSteps)
+            var tmpCurrent = iCurrent;
+            tmpCurrent = bPublic ? iDirection : tmpCurrent += iDirection;
+            if(tmpCurrent > -1 && tmpCurrent < iSteps)
             {
+                iCurrent = tmpCurrent;
                 var oPosition = {};
                 oPosition[bAxis ? 'left' : 'top'] = -(iCurrent * (iPageSize * options.display));    
                 oContent.animate(oPosition,{
