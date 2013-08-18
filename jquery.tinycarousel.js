@@ -35,6 +35,7 @@
     $.fn.tinycarousel_start = function () { $(this).data('tcl').start(); };
     $.fn.tinycarousel_stop = function () { $(this).data('tcl').stop(); };
     $.fn.tinycarousel_move = function (iNum) { $(this).data('tcl').move(iNum - 1,true); };
+    $.fn.tinycarousel_destroy = function() { $(this).data('tcl').destroy(); };
     
     function Carousel(root, options)
     {
@@ -121,6 +122,15 @@
 
         this.stop  = function () { clearTimeout(oTimer); bPause = true; };
         this.start = function () { bPause = false; setTimer(); };
+        this.destroy = function() {
+            this.stop();
+            if(options.interval) {
+                root.unbind('mouseenter mouseleave');
+            }
+            var position = {};
+            position[bAxis ? 'left' : 'top'] = 0;
+            oContent.animate(position, {queue: false, duration: 0});
+        };
         this.move  = function (iDirection, bPublic)
         {
             var tmpCurrent = iCurrent;
