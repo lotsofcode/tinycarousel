@@ -127,6 +127,9 @@
             if(options.interval) {
                 root.unbind('mouseenter mouseleave');
             }
+            if(options.pager && oPager.length > 0) {
+                $('a',oPager).unbind('click');
+            }
             var position = {};
             position[bAxis ? 'left' : 'top'] = 0;
             oContent.animate(position, {queue: false, duration: 0});
