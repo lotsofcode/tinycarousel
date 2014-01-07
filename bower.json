@@ -1,0 +1,11 @@
+{
+  "name": "lotsofcode/tinycarousel",
+  "version": "1.9.0",
+  "main": "jquery.tinycarousel.js",
+  "description": "Tiny carousel taken from http://baijs.nl/tinycarousel with some modifications",
+  "license": "Dual licensed under the MIT or GPL Version 2 licenses.",
+  "ignore": [
+    ".jshintrc",
+    "**/*.txt"
+  ]
+}
